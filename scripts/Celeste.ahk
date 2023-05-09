@@ -59,6 +59,7 @@ class Celeste {
         Send, % Format("{Blind}{{4} 5}{{2} {3}}{{1}}{{2} 5}{{1}}{{4} 3}", this.confirmKey, this.downKey, fullRunSlot, this.upKey)
         SetKeyDelay, 10, 15
         Send, % Format("{Blind}{{1} 25}", this.confirmKey)
+        SetKeyDelay, 25, 25
     }
     
     getCelesteKeys() {
