@@ -39,16 +39,16 @@ class Celeste {
     
     fullRunReset() {
         ; sendLog(LOG_LEVEL_INFO, Format("Resetting full run"))
+        save := Format("{1}Saves\{2}.celeste", this.dir, fullRunSlot)
         if (debugResets && !saveOnReset) {
             Send, % Format("{Blind}{Sc029}{o}{Tab}{Enter}{Sc029}{{1} 12}", this.confirmKey)
-            Sleep, 1200
+            Sleep, 200
         } else {
-            save := Format("{1}Saves\{2}.celeste", this.dir, fullRunSlot)
             FileRead, lastData, % save
             
             start := A_TickCount
             While (true) {
-                Send, % Format("{Blind}{Esc}{{1} 3}{{2}}", this.downKey, this.confirmKey, this.cancelKey)
+                Send, % Format("{Blind}{Esc}{{1} 3}{{2}}", this.downKey, this.confirmKey)
                 FileRead, newData, % save
                 if (lastData != newData) {
                     ; sendLog(LOG_LEVEL_INFO, "Save detected, continuing fullgame reset")
@@ -59,18 +59,16 @@ class Celeste {
                 }
                 lastData := newData
             }
-            Sleep, 1000
         }
+        Sleep, 1000
+        FileDelete, % save
         this.startNewFullGame()
     }
     
     startNewFullGame() {
         Send, % Format("{Blind}{{2} 5}{{1} 5}", this.confirmKey, this.upKey)
         Sleep, 900
-        Send, % Format("{Blind}{{4} 5}{{2} {3}}{{1}}{{2} 7}{{1}}{{4} 3}", this.confirmKey, this.downKey, fullRunSlot, this.upKey)
-        SetKeyDelay, 10, 1
-        Send, % Format("{Blind}{{1} 25}", this.confirmKey)
-        SetKeyDelay, %keyDelay%, %keyDuration%
+        Send, % Format("{Blind}{{1} 5}{{2} {4}}{{3} 10}", this.upKey, this.downKey, this.confirmKey, fullRunSlot)
     }
     
     getCelesteKeys() {

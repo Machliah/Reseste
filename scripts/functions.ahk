@@ -3,7 +3,7 @@
 
 reset(resetFunctionType := "") {
     ; Really scuffed ahk way to do a default argument value
-    resetFunctionType := resetFunctionType ? resetFunctionType : resetType == "IL" ? "IL" : "full"
+    resetFunctionType := resetFunctionType ? resetFunctionType : resetType
     if (resetFunctionType == "IL") {
         celeste.ILReset()
     } else if (resetFunctionType == "full") {
