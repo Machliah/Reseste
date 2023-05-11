@@ -1,17 +1,17 @@
 ; Celeste Reset Script
 ; By Mach
 
-reset() {
-    if (resetType == "IL") {
+reset(resetFunctionType := resetType) {
+    if (resetFunctionType == "IL") {
         celeste.ILReset()
-    } else if (resetType == "full") {
+    } else if (resetFunctionType == "full") {
         celeste.fullRunReset()
     }
 }
 
 sendLog(logLevel, logMsg) {
     timeStamp := A_TickCount
-    macroLogFile := FileOpen("data/log.log", "a -rwd")
+    macroLogFile := FileOpen("log.log", "a -rwd")
     
     if (!IsObject(macroLogFile)) {
         logQueue := Func("sendLog").Bind(logLevel, logMsg, timeStamp)
@@ -32,7 +32,7 @@ getCelesteDirectoryFromPid(pid) {
     ; Format Celeste path
     dir := StrReplace(SubStr(rawOut, 2, -14), "/", "\")
     
-    sendLog(LOG_LEVEL_INFO, Format("Got Celeste directory ""{1}"" from pid: {2}", dir, pid))
+    ; sendLog(LOG_LEVEL_INFO, Format("Got Celeste directory ""{1}"" from pid: {2}", dir, pid))
     
     return dir
 }

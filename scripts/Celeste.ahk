@@ -11,24 +11,22 @@ class Celeste {
     
     ILReset() {
         sendLog(LOG_LEVEL_INFO, Format("Resetting IL run"))
-        save := debugResets ? Format("{1}Saves\debug.celeste", this.dir) : Format("{1}Saves\{2}.celeste", this.dir, ilRunSlot)
         if (saveOnReset || !debugResets) {
+            save := debugResets ? Format("{1}Saves\debug.celeste", this.dir) : Format("{1}Saves\{2}.celeste", this.dir, ilRunSlot)
             FileRead, lastData, % save
-            
-            Send, % Format("{Blind}{{1}}{{2}}", this.restartKey, this.confirmKey)
             
             start := A_TickCount
             While (true) {
+                Send, % Format("{Blind}{{1}}{{2}}", this.restartKey, this.confirmKey)
                 FileRead, newData, % save
                 if (lastData != newData) {
-                    sendLog(LOG_LEVEL_INFO, "Save detected, continuing reset")
+                    ; sendLog(LOG_LEVEL_INFO, "Save detected, continuing IL reset")
                     Break
-                } else if (A_TickCount - start > saveCheckTimeout && saveCheckTimeout > 0) {
-                    sendLog(LOG_LEVEL_WARNING, "saveCheckTimeout reached, continuing reset")
+                } else if (A_TickCount - start > 5000 && 5000 > 0) {
+                    ; sendLog(LOG_LEVEL_WARNING, "5000ms reached, continuing IL reset")
                     Break
                 }
                 lastData := newData
-                Sleep, 10
             }
         }
         if (debugResets) {
@@ -42,27 +40,40 @@ class Celeste {
     fullRunReset() {
         sendLog(LOG_LEVEL_INFO, Format("Resetting full run"))
         if (debugResets && !saveOnReset) {
-            Send, % Format("{Blind}{Sc029}{o}{Tab}{Enter}{Sc029}")
-            Sleep, 10
-            Send, % Format("{Blind}{{1} 6}", this.confirmKey)
-            Sleep, 900
+            Send, % Format("{Blind}{Sc029}{o}{Tab}{Enter}{Sc029}{{1} 7}", this.confirmKey)
         } else {
-            Send, % Format("{Blind}{Esc}{{1} 3}{{2}}", this.downKey, this.confirmKey)
-            Sleep, 1600
+            save := Format("{1}Saves\{2}.celeste", this.dir, fullRunSlot)
+            FileRead, lastData, % save
+            
+            start := A_TickCount
+            While (true) {
+                Send, % Format("{Blind}{Esc}{{1} 3}{{2}}", this.downKey, this.confirmKey)
+                FileRead, newData, % save
+                if (lastData != newData) {
+                    ; sendLog(LOG_LEVEL_INFO, "Save detected, continuing fullgame reset")
+                    Break
+                } else if (A_TickCount - start > 5000 && 5000 > 0) {
+                    ; sendLog(LOG_LEVEL_WARNING, "5000ms reached, continuing fullgame reset")
+                    Break
+                }
+                lastData := newData
+            }
         }
+        Sleep, 1000
         this.startNewSave()
     }
     
     startNewSave() {
         Send, % Format("{Blind}{{1} 5}", this.confirmKey)
         Sleep, 800
-        Send, % Format("{Blind}{{4} 5}{{2} {3}}{{1}}{{2} 5}{{1}}{{4} 3}", this.confirmKey, this.downKey, fullRunSlot, this.upKey)
-        SetKeyDelay, 10, 15
+        Send, % Format("{Blind}{{4} 5}{{2} {3}}{{1}}{{2} 7}{{1}}{{4} 3}", this.confirmKey, this.downKey, fullRunSlot, this.upKey)
+        SetKeyDelay, 10, 1
         Send, % Format("{Blind}{{1} 25}", this.confirmKey)
+        SetKeyDelay, %keyDelay%, 5
     }
     
     getCelesteKeys() {
-        sendLog(LOG_LEVEL_INFO, Format("Reading settings from ""{1}""", Format("{1}Saves\settings.celeste", this.dir)))
+        ; sendLog(LOG_LEVEL_INFO, Format("Reading settings from ""{1}""", Format("{1}Saves\settings.celeste", this.dir)))
         FileRead, xml, % Format("{1}Saves\settings.celeste", this.dir)
         
         doc := ComObjCreate("MSXML2.DOMDocument.6.0")
@@ -82,7 +93,7 @@ class Celeste {
         this.restartKey := getOneExclusiveFromTwoHaystack(restartKeys, downKeys, confirmKeys)
         this.downConfirmKey := getOneSharedFromTwoHaystack(downKeys, confirmKeys)
         
-        sendLog(LOG_LEVEL_INFO, Format("Up key: {1}, down key: {2}, confirm key: {3}, cancel key: {4}, restart key: {5}, down confirm key: {6}", this.upKey, this.downKey, this.confirmKey, this.cancelKey, this.restartKey, this.downConfirmKey))
+        ; sendLog(LOG_LEVEL_INFO, Format("Up key: {1}, down key: {2}, confirm key: {3}, cancel key: {4}, restart key: {5}, down confirm key: {6}", this.upKey, this.downKey, this.confirmKey, this.cancelKey, this.restartKey, this.downConfirmKey))
     }
     
 }
