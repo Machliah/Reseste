@@ -1,9 +1,15 @@
 # Reseste
 Celeste Speedrun Reset Macro
 
+1. Install the .zip from releases
+2. Configure your settings in the settings.ahk file
+3. Configure your hotkeys in the hotkeys.ahk file
+4. Run the Reseste.ahk file
+
+After changing settings or hotkeys you will need to right click the AHK macro icon in your tray table and select "Reload Script."
+
 ## Settings
 - resetType : identify reset type between individual level and full save
-
 
 - fullRunSlot : identify the save slot that full game runs will be reset using (this save gets deleted)
 - ilRunSlot : identify the save slot that individual runs will be done on (if you use 'debugResets' this doesn't matter)
