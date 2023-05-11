@@ -1,5 +1,5 @@
 # Reseste
-Celeste Speedrun Reset Macro
+Celeste Speedrun Reset Macro, yes I know it's a silly name 😭
 
 1. Install the .zip from releases
 2. Configure your settings in the settings.ahk file
