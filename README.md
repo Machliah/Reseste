@@ -2,7 +2,7 @@
 Celeste Speedrun Reset Macro, yes I know it's a silly name 😭
 FOR AUTOHOTKEY VERSION 1.1! (NOT 2.0 WHICH IS THE LATEST)
 You need to have keyboard bindings for menu navigation keys, confirm, down confirm, and cancel for this to work
-Based on https://docs.google.com/document/d/1OglBKMiR_nDIgPTp5LHldOPj9mLxln4HKw_F5C3XDl8/edit
+Based on: https://docs.google.com/document/d/1OglBKMiR_nDIgPTp5LHldOPj9mLxln4HKw_F5C3XDl8/edit
 
 1. Install AutoHotKey version 1.1
 2. Install the .zip from releases
