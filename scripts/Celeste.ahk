@@ -10,7 +10,7 @@ class Celeste {
     }
     
     ILReset() {
-        sendLog(LOG_LEVEL_INFO, Format("Resetting IL run"))
+        ; sendLog(LOG_LEVEL_INFO, Format("Resetting IL run"))
         if (saveOnReset || !debugResets) {
             save := debugResets ? Format("{1}Saves\debug.celeste", this.dir) : Format("{1}Saves\{2}.celeste", this.dir, ilRunSlot)
             FileRead, lastData, % save
