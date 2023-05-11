@@ -38,38 +38,39 @@ class Celeste {
     }
     
     fullRunReset() {
-        sendLog(LOG_LEVEL_INFO, Format("Resetting full run"))
+        ; sendLog(LOG_LEVEL_INFO, Format("Resetting full run"))
         if (debugResets && !saveOnReset) {
-            Send, % Format("{Blind}{Sc029}{o}{Tab}{Enter}{Sc029}{{1} 7}", this.confirmKey)
+            Send, % Format("{Blind}{Sc029}{o}{Tab}{Enter}{Sc029}{{1} 12}", this.confirmKey)
+            Sleep, 1200
         } else {
             save := Format("{1}Saves\{2}.celeste", this.dir, fullRunSlot)
             FileRead, lastData, % save
             
             start := A_TickCount
             While (true) {
-                Send, % Format("{Blind}{Esc}{{1} 3}{{2}}", this.downKey, this.confirmKey)
+                Send, % Format("{Blind}{Esc}{{1} 3}{{2}}", this.downKey, this.confirmKey, this.cancelKey)
                 FileRead, newData, % save
                 if (lastData != newData) {
                     ; sendLog(LOG_LEVEL_INFO, "Save detected, continuing fullgame reset")
                     Break
                 } else if (A_TickCount - start > 5000 && 5000 > 0) {
-                    ; sendLog(LOG_LEVEL_WARNING, "5000ms reached, continuing fullgame reset")
-                    Break
+                    ; sendLog(LOG_LEVEL_WARNING, "5000ms reached, abandoning fullgame reset")
+                    Return
                 }
                 lastData := newData
             }
+            Sleep, 1000
         }
-        Sleep, 1000
-        this.startNewSave()
+        this.startNewFullGame()
     }
     
-    startNewSave() {
-        Send, % Format("{Blind}{{1} 5}", this.confirmKey)
-        Sleep, 800
+    startNewFullGame() {
+        Send, % Format("{Blind}{{2} 5}{{1} 5}", this.confirmKey, this.upKey)
+        Sleep, 900
         Send, % Format("{Blind}{{4} 5}{{2} {3}}{{1}}{{2} 7}{{1}}{{4} 3}", this.confirmKey, this.downKey, fullRunSlot, this.upKey)
         SetKeyDelay, 10, 1
         Send, % Format("{Blind}{{1} 25}", this.confirmKey)
-        SetKeyDelay, %keyDelay%, 5
+        SetKeyDelay, %keyDelay%, %keyDuration%
     }
     
     getCelesteKeys() {

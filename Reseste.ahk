@@ -8,7 +8,7 @@
 #Include %A_ScriptDir%\scripts\Celeste.ahk
 #Include settings.ahk
 
-SetKeyDelay, %keyDelay%, 5
+SetKeyDelay, %keyDelay%, %keyDuration%
 SetTitleMatchMode, 2
 SetBatchLines, -1
 Thread, NoTimers, True

@@ -1,12 +1,18 @@
 ; Celeste Reset Script
 ; By Mach
 
-reset(resetFunctionType := resetType) {
+reset(resetFunctionType := "") {
+    ; Really scuffed ahk way to do a default argument value
+    resetFunctionType := resetFunctionType ? resetFunctionType : resetType == "IL" ? "IL" : "full"
     if (resetFunctionType == "IL") {
         celeste.ILReset()
     } else if (resetFunctionType == "full") {
         celeste.fullRunReset()
     }
+}
+
+startNewSave() {
+    celeste.startNewFullGame()
 }
 
 sendLog(logLevel, logMsg) {
