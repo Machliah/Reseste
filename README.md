@@ -1,10 +1,12 @@
 # Reseste
 Celeste Speedrun Reset Macro, yes I know it's a silly name 😭
+FOR AUTOHOTKEY VERSION 1.1! (NOT 2.0 WHICH IS THE LATEST)
 
-1. Install the .zip from releases
-2. Configure your settings in the settings.ahk file
-3. Configure your hotkeys in the hotkeys.ahk file
-4. Run the Reseste.ahk file
+1. Install AutoHotKey version 1.1
+2. Install the .zip from releases
+3. Configure your settings in the settings.ahk file
+4. Configure your hotkeys in the hotkeys.ahk file
+5. Run the Reseste.ahk file
 
 After changing settings or hotkeys you will need to right click the AHK macro icon in your tray table and select "Reload Script."
 
